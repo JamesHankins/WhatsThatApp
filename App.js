@@ -5,6 +5,7 @@ export default function App() {
   return (
     <View style={styles.container}>
       <Text>This is a test</Text>
+      <Text>Adding text view</Text>
       <StatusBar style="auto" />
     </View>
   );
@@ -18,3 +19,4 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
 });
+push 
