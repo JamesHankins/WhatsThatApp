@@ -1,20 +1,54 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import React, { Component } from 'react';
+import { Text, TextInput, View, Button, Alert,TouchableOpacity } from 'react-native';
 
-export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>This is a test 2</Text>
-      <StatusBar style="auto" />
-    </View>
-  );
+class App extends Component {
+  constructor(props){
+    super(props);
+
+    this.state = {
+      email: "",
+      password: "",
+      error: ""
+
+    }
+  }
+
+  handleEmailInput = (email) => {
+    //Validation here
+    this.setState({email: email})
+  }
+
+  handlePasswordInput = (password) => {
+    //Validation here
+    this.setState({password: password})
+  }
+  
+  
+
+  login = () => {
+    console.log("Login Pressed!")
+  }
+
+  render() {
+    return (
+    
+      <View>
+        <TextInput placeholder='Email...' onChangeText={this.handleEmailInput} value ={this.state.email} />
+        <TextInput placeholder='Password...' secureTextEntry={true} onChangeText={this.handlePasswordInput} value ={this.state.password} />
+        
+        <TouchableOpacity onPress={this.login}>
+          <Text>Login!</Text>
+        </TouchableOpacity>
+      
+        
+      </View>
+
+    );
+  }
+
+  
+
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+export default App;
+
