@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { Text, TextInput, View, Button, Alert,TouchableOpacity } from 'react-native';
+import { Text, TextInput, View, Button, Alert,TouchableOpacity, StyleSheet } from 'react-native';
+import * as EmailValidator from 'email-validator'
 
 class App extends Component {
   constructor(props){
@@ -15,7 +16,13 @@ class App extends Component {
 
   handleEmailInput = (email) => {
     //Validation here
-    this.setState({email: email})
+    if (EmailValidator.validate(email) == true) {
+      this.setState({email: email})
+    } 
+    else{
+      console.log("Login Pressed!")
+    }
+    
   }
 
   handlePasswordInput = (password) => {
@@ -29,10 +36,13 @@ class App extends Component {
     console.log("Login Pressed!")
   }
 
+  
+
+
   render() {
     return (
     
-      <View>
+      <View style={styles.container}>
         <TextInput placeholder='Email...' onChangeText={this.handleEmailInput} value ={this.state.email} />
         <TextInput placeholder='Password...' secureTextEntry={true} onChangeText={this.handlePasswordInput} value ={this.state.password} />
         
@@ -46,9 +56,27 @@ class App extends Component {
     );
   }
 
-  
-
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    padding: 24,
+    backgroundColor: '#eaeaea',
+  },
+  title: {
+    marginTop: 16,
+    paddingVertical: 8,
+    borderWidth: 4,
+    borderColor: '#20232a',
+    borderRadius: 6,
+    backgroundColor: '#61dafb',
+    color: '#20232a',
+    textAlign: 'center',
+    fontSize: 30,
+    fontWeight: 'bold',
+  },
+});
 
 export default App;
 
