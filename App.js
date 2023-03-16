@@ -1,6 +1,7 @@
-import React, { Component } from 'react';
-import { Text, TextInput, View, Button, Alert,TouchableOpacity, StyleSheet } from 'react-native';
-import * as EmailValidator from 'email-validator'
+import React, { Component , useState} from 'react';
+import { Text, TextInput, View, Button, Alert,TouchableOpacity, StyleSheet  } from 'react-native';
+import * as EmailValidator from 'email-validator';
+import PasswordChecklist from "react-password-checklist";
 
 class App extends Component {
   constructor(props){
@@ -10,73 +11,67 @@ class App extends Component {
       email: "",
       password: "",
       error: ""
-
     }
+  }
+  isPasswordStrong = () => {
+
   }
 
   handleEmailInput = (email) => {
-    //Validation here
-    if (EmailValidator.validate(email) == true) {
-      this.setState({email: email})
-    } 
-    else{
-      console.log("Login Pressed!")
-    }
-    
+    this.setState({email: email})
   }
 
   handlePasswordInput = (password) => {
-    //Validation here
+    if(password.length() < 8){
+
+    }
     this.setState({password: password})
   }
-  
-  
-
-  login = () => {
-    console.log("Login Pressed!")
-  }
 
   
-
-
-  render() {
-    return (
+  
+  handleLogin = () => {
     
-      <View style={styles.container}>
+      this.setState({error:""})
+      
+      if (!EmailValidator.validate(this.state.email)) {
+        this.setState({error:"Invalid Email"})
+        console.log("Invalid Email");
+        return;
+      }
+      else{
+        this.setState({error:""})
+        console.log("Loggin In");
+      }
+
+
+
+      
+    
+  }
+  
+render() {
+  return (
+    
+      <View>
         <TextInput placeholder='Email...' onChangeText={this.handleEmailInput} value ={this.state.email} />
         <TextInput placeholder='Password...' secureTextEntry={true} onChangeText={this.handlePasswordInput} value ={this.state.password} />
         
-        <TouchableOpacity onPress={this.login}>
+        <TouchableOpacity onPress={this.handleLogin}>
           <Text>Login!</Text>
         </TouchableOpacity>
-      
+
         
+        
+        {this.state.error ? <Text>{this.state.error }</Text>: null}
+
       </View>
 
-    );
+    )
   }
 
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: 24,
-    backgroundColor: '#eaeaea',
-  },
-  title: {
-    marginTop: 16,
-    paddingVertical: 8,
-    borderWidth: 4,
-    borderColor: '#20232a',
-    borderRadius: 6,
-    backgroundColor: '#61dafb',
-    color: '#20232a',
-    textAlign: 'center',
-    fontSize: 30,
-    fontWeight: 'bold',
-  },
-});
 
 export default App;
 
