@@ -1,77 +1,47 @@
-import React, { Component , useState} from 'react';
-import { Text, TextInput, View, Button, Alert,TouchableOpacity, StyleSheet  } from 'react-native';
-import * as EmailValidator from 'email-validator';
-import PasswordChecklist from "react-password-checklist";
 
-class App extends Component {
-  constructor(props){
-    super(props);
+//Import react, react naviagation and stack navigator
+import * as React from 'react';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
-    this.state = {
-      email: "",
-      password: "",
-      error: ""
-    }
-  }
-  isPasswordStrong = () => {
-
-  }
-
-  handleEmailInput = (email) => {
-    this.setState({email: email})
-  }
-
-  handlePasswordInput = (password) => {
-    if(password.length() < 8){
-
-    }
-    this.setState({password: password})
-  }
-
-  
-  
-  handleLogin = () => {
-    
-      this.setState({error:""})
-      
-      if (!EmailValidator.validate(this.state.email)) {
-        this.setState({error:"Invalid Email"})
-        console.log("Invalid Email");
-        return;
-      }
-      else{
-        this.setState({error:""})
-        console.log("Loggin In");
-      }
+//Styling for react native paper
+import {
+  MD3LightTheme as DefaultTheme,
+  PaperProvider,
+} from 'react-native-paper';
 
 
 
-      
-    
-  }
-  
-render() {
+//Login, Signup and Home screen imports
+import Login from './screens/login';
+import Signup from './screens/signup';
+import HomeNavigation from './navigation/homeNavigation';
+
+
+//Styling for react native paper
+const theme = {
+  ...DefaultTheme,
+  colors: {
+    ...DefaultTheme.colors,
+    primary: '#075E54',
+    secondary: '#128C7E',
+  },
+};
+
+//Creating Stack Navigator
+const Stack = createNativeStackNavigator();
+
+//Stack Navigator Container and Screens
+export default function App() {
   return (
-    
-      <View>
-        <TextInput placeholder='Email...' onChangeText={this.handleEmailInput} value ={this.state.email} />
-        <TextInput placeholder='Password...' secureTextEntry={true} onChangeText={this.handlePasswordInput} value ={this.state.password} />
-        
-        <TouchableOpacity onPress={this.handleLogin}>
-          <Text>Login!</Text>
-        </TouchableOpacity>
-
-        
-        
-        {this.state.error ? <Text>{this.state.error }</Text>: null}
-
-      </View>
-
-    )
-  }
-
+    <PaperProvider theme={theme}>
+      <NavigationContainer>
+        <Stack.Navigator initialRouteName='Login'>
+          <Stack.Screen name="Login" component={Login} options={{headerShown: false}}/>
+          <Stack.Screen name="Signup" component={Signup} options={{headerShown: false}}/>
+          <Stack.Screen name="HomeNavigation" component={HomeNavigation} options={{headerShown: false}} />
+        </Stack.Navigator>
+      </NavigationContainer>
+    </PaperProvider>
+  );
 }
-
-
-export default App;
-
